@@ -26,8 +26,8 @@ def get_course_name_credits(driver) -> Tuple[str, str]:
     ).text.split("\n")[-1]
 
     # Regex to extract course name and credits
-    name = re.search(r"(.+?) \(\d+ op\)", course_name).group(1)
-    credits = re.search(r"\((\d+) op\)", course_name).group(1)
+    name = re.search(r"(.+?) \(\d+(–\d+)? op\)", course_name).group(1)
+    credits = re.search(r"\((\d+(–\d+)?) op\)", course_name).group(1)
 
     return (name, credits)
 
@@ -42,7 +42,11 @@ def get_course_info(driver) -> Dict[str, str]:
         return {}
 
     lines = [x.strip() for x in details.split("\n")]
-    content_dict = {}
+    content_dict = {
+        "OSAAMISTAVOITTEET": [],
+        "ASIASISÄLTÖ": [],
+        "LISÄTIEDOT": [],
+    }
     current_title = ""
 
     for line in lines:
