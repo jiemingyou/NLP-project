@@ -67,6 +67,32 @@ def get_course_info(driver) -> Dict[str, str]:
     return content_dict
 
 
+def scrape_course_data(url):
+    """Scrape course data from the given URL."""
+    # 1. Init the driver
+    driver = get_driver(url)
+
+    # 2. Get the course code
+    course_code = get_course_code(driver)
+
+    # 3. Get the course name and credits
+    course_name, credits = get_course_name_credits(driver)
+
+    # 4. Get the course info
+    course_info = get_course_info(driver)
+
+    driver.quit()
+
+    # 5. Return the course data
+    return {
+        "course_code": course_code,
+        "course_name": course_name,
+        "credits": credits,
+        "course_info": course_info,
+        "url": url,
+    }
+
+
 if __name__ == "__main__":
     url = "https://sisu.aalto.fi/student/courseunit/otm-c09c8242-5e9f-46e6-a38c-8855d9578cc1"
     driver = get_driver(url)
