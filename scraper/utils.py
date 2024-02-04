@@ -1,9 +1,22 @@
+import os
 import re
+
 from typing import Tuple, Dict
 from pprint import pprint
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+
+def get_urls(path):
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Directory {path} does not exist.")
+
+    urls = []
+    for file in os.listdir(path):
+        with open(path + file, "r") as f:
+            for url in f:
+                urls.append(url.strip())
+    return urls
 
 
 def get_driver(url):

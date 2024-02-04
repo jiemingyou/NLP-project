@@ -3,25 +3,20 @@ import time
 import random
 import pandas as pd
 
-from utils import scrape_course_data
+from utils import get_urls, scrape_course_data
 
 
 def scrape_sisu() -> pd.DataFrame:
-
-    # Get the URLs from the text files
-    urls = []
-    for file in os.listdir("urls/"):
-        with open(f"urls/{file}", "r") as f:
-            for url in f:
-                urls.append(url.strip())
 
     # Store the course data into a dataframe
     course_data = pd.DataFrame(
         columns=["course_code", "course_name", "credits", "course_info", "url"]
     )
 
-    for url in urls:
-        print(f"({urls.index(url) + 1}/{len(urls)})")
+    # Get the URLs from the text files
+    urls = get_urls("urls/")
+    for idx, url in enumerate(urls):
+        print(f"Scraping {idx+1}/{len(url)}")
 
         try:
             # Scrape the course data
