@@ -19,6 +19,10 @@ def scrape_sisu() -> pd.DataFrame:
     for idx, url in enumerate(urls):
         print(f"Scraping {idx+1}/{len(urls)}")
 
+        if idx % 50 == 0:
+            print(f"Saving the checkpoint data...")
+            course_data.to_csv(f"data/course_data_{idx}.csv", index=False)
+
         try:
             # Scrape the course data
             data = scrape_course_data(url)

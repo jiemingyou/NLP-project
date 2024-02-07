@@ -2,9 +2,9 @@ import os
 import re
 
 from typing import Tuple, Dict
-from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 
 def get_urls(path):
@@ -20,7 +20,13 @@ def get_urls(path):
 
 
 def get_driver(url):
-    driver = webdriver.Chrome()
+    """
+    Return a driver instance running headless
+    """
+    options = Options()
+    options.add_argument("--headless=new")
+    options.add_argument("--disable-extensions")
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
 
@@ -107,9 +113,12 @@ def scrape_course_data(url):
 
 
 if __name__ == "__main__":
-    url = "https://sisu.aalto.fi/student/courseunit/otm-c09c8242-5e9f-46e6-a38c-8855d9578cc1"
-    driver = get_driver(url)
-    print(get_course_code(driver))
-    print(get_course_name_credits(driver))
-    print(get_course_info(driver))
-    driver.quit()
+    # url = "https://sisu.aalto.fi/student/courseunit/otm-c09c8242-5e9f-46e6-a38c-8855d9578cc1"
+    # d#river = get_driver(url)
+    # print(get_course_code(driver))
+    # print(get_course_name_credits(driver))
+    # print(get_course_info(driver))
+    # driver.quit()
+    with open("all_urls.txt", "w") as f:
+        for url in get_urls("urls/"):
+            f.write(url + "\n")
