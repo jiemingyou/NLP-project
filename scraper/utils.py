@@ -11,12 +11,12 @@ def get_urls(path):
     if not os.path.exists(path):
         raise FileNotFoundError(f"Directory {path} does not exist.")
 
-    urls = []
+    urls = set()
     for file in os.listdir(path):
         with open(path + file, "r") as f:
             for url in f:
-                urls.append(url.strip())
-    return urls
+                urls.add(url.strip())
+    return list(urls)
 
 
 def get_driver(url):

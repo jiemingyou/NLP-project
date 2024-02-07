@@ -1,4 +1,3 @@
-import os
 import time
 import random
 import pandas as pd
@@ -15,8 +14,10 @@ def scrape_sisu() -> pd.DataFrame:
 
     # Get the URLs from the text files
     urls = get_urls("urls/")
+    print(f"Found {len(urls)} URLs to scrape")
+
     for idx, url in enumerate(urls):
-        print(f"Scraping {idx+1}/{len(url)}")
+        print(f"Scraping {idx+1}/{len(urls)}")
 
         try:
             # Scrape the course data
