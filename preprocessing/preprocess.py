@@ -12,7 +12,7 @@ def preprocess():
     df["course_description"] = df.apply(concat_course_info, axis=1)
 
     # Create a dataset
-    dataset = Dataset.from_pandas(df.sample(20))
+    dataset = Dataset.from_pandas(df)
 
     # Apply the translation pipeline
     translator = Translator(model_name="Helsinki-NLP/opus-tatoeba-fi-en")
