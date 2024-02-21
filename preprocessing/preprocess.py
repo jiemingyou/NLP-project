@@ -18,9 +18,6 @@ def preprocess():
     translator = Translator(model_name="Helsinki-NLP/opus-tatoeba-fi-en")
     dataset = translator.translate_dataset(dataset)
 
-    # Save the dataset
-    dataset = dataset.remove_columns(["__index_level_0__"])
-
     return dataset
 
 
