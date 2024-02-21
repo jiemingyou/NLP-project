@@ -2,7 +2,7 @@ import time
 import random
 import pandas as pd
 
-from utils import get_urls, scrape_course_data
+from scraper.scraping_utils import get_urls, scrape_course_data
 
 
 def scrape_sisu() -> pd.DataFrame:
