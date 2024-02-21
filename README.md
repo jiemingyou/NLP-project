@@ -9,3 +9,5 @@ Save the Sisu course brochure urls to a single text file to `urls/` and run
 ```bash
 python scraper/scraper.py
 ```
+
+Testi
