@@ -16,7 +16,7 @@ def preprocess():
 
     # Apply the translation pipeline
     translator = Translator(model_name="Helsinki-NLP/opus-tatoeba-fi-en")
-    dataset = translator.translate_dataset(dataset)
+    dataset = translator.translate_dataset(dataset, "course_description")
 
     return dataset
 
