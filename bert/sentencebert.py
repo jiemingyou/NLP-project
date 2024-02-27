@@ -19,6 +19,8 @@ class SentenceBert:
     def top_k_sentences(self, sentence, sentences, k=5):
         scores = self.rank_sentences(sentence, sentences)
         sorted_scores, sorted_indices = scores.sort(descending=True)
+        print(sorted_scores, sorted_indices)
         top_k_indices = sorted_indices[0][:k]
-        return top_k_indices
+        top_k_sentences = [(sentences[i], scores[0][i].item()) for i in top_k_indices]
+        return top_k_sentences
 
