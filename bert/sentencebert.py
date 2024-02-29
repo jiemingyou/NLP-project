@@ -23,4 +23,6 @@ class SentenceBert:
         top_k_indices = sorted_indices[0][:k]
         top_k_sentences = [(sentences[i], scores[0][i].item()) for i in top_k_indices]
         return top_k_sentences
+    
+
 
