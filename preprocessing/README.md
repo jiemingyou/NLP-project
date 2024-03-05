@@ -4,7 +4,8 @@ This directory contains the code for data preprocessing.
 
 ## Preprocessing steps
 
-1. Course description translation (FI $\rightarrow$ EN) using
+1. Chunk the course description to sentences and translate them from Finnish to
+   English using the
    [`Helsinki-NLP/opus-tatoeba-fi-en`](https://huggingface.co/Helsinki-NLP/opus-tatoeba-fi-en)
    model from Hugging Face.
 2. Tokenizing, lemmatizing and removing stop words from the course descriptions.
@@ -16,5 +17,6 @@ This directory contains the code for data preprocessing.
 Copy the course data to the `../scraper/data` directory. Then run
 
 ```bash
+cd preprocessing
 python preprocess.py
 ```
