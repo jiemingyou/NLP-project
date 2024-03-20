@@ -11,13 +11,13 @@ class SentenceBert:
     def cos_sim(self, embedding1, embedding2):
         return util.cos_sim(embedding1, embedding2)
     
-    def rank_sentences(self, sentence, sentences):
+    def rank_sentences(self, sentence, embeddings):
         embedding = self.encode(sentence)
-        embeddings = self.encode(sentences)
+        # embeddings = self.encode(sentences)
         return self.cos_sim(embedding, embeddings)
     
-    def top_k_sentences(self, sentence, sentences, k=5):
-        scores = self.rank_sentences(sentence, sentences)
+    def top_k_sentences(self, sentence, sentences, embeddings, k=5):
+        scores = self.rank_sentences(sentence, embeddings)
         sorted_scores, sorted_indices = scores.sort(descending=True)
         top_k_indices = sorted_indices[0][:k]
         top_k_sentences = [(sentences[i], scores[0][i].item()) for i in top_k_indices]
