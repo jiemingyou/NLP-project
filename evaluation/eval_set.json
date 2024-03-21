@@ -1,0 +1,54 @@
+{
+    "queries" : [
+        {
+            "query_id": 1,
+            "query": "Strategy consulting with a focus on the technology sector",
+            "answers": [
+                "TU-E1120",
+                "TU-E4310",
+                "TU-E1031",
+                "TU-CJ0001",
+                "TU-E4320"]
+        },
+        {
+            "query_id": 2,
+            "query": "Courses that teach you the basics of statistics and statistical thinking",
+            "answers": [
+                "MS-A0501",
+                "MS-A0509",
+                "MS-C1620",
+                "MS-E1623",
+                "MS-C2128"]
+        },
+        {
+            "query_id": 3,
+            "query": "Understanding SOTA transformers, deep learning and ChatGPT",
+            "answers": [
+                "CS-E4890",
+                "CS-EJ3311",
+                "ELEC-E5550",
+                "ELEC-E7261",
+                "CS-E407518"]
+        },
+        {
+            "query_id": 4,
+            "query": "Understanding hype behind blockchain, cryptocurrency, and BITCOIN",
+            "answers": [
+                "CS-AJ0100",
+                "TU-E4300",
+                "CS-E5310",
+                "CS-E4340",
+                "MS-E1687"]
+        },
+        {
+            "query_id": 5,
+            "query": "How to build a new startup",
+            "answers": [
+                "TU-E4100",
+                "TU-C2080",
+                "TU-C2090",
+                "TU-E4040",
+                "TU-E4031"]
+        }
+    ]
+}
