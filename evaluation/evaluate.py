@@ -9,7 +9,7 @@ class IREvaluator:
         self.eval_set = self.load_evaluation_data()
         self.top_n_courses_openai = {}
 
-    def load_evaluation_data(self):
+    def _load_evaluation_data(self):
         with open("eval_set.json", "r") as f:
             return json.load(f)
 
@@ -28,19 +28,19 @@ class IREvaluator:
 
         return {"ndcg": np.mean(ndcgs)}
 
-    def load_openai_course_embeddings(self):
+    def _load_openai_course_embeddings(self):
         openai_embeddings_df = pd.read_pickle("embeddings_pretranslated_openai-small.pkl")
         openai_embeddings = openai_embeddings_df["embedding"].to_list()
         openai_embeddings = np.vstack(openai_embeddings)
         course_codes = openai_embeddings_df["course_code"]
         return openai_embeddings, course_codes
 
-    def get_openai_embedding(self, text, client, model="text-embedding-3-small"):
+    def _get_openai_embedding(self, text, client, model="text-embedding-3-small"):
         text = text.replace("\n", " ")
         embedding = client.embeddings.create(input = [text], model=model).data[0].embedding
         return embedding
     
-    def vector_search(self, query, embeddings, top_n=5):
+    def _vector_search(self, query, embeddings, top_n=5):
         scores = np.dot(embeddings, query)
         top_n_idx = scores.argsort()[::-1][:top_n]
         return top_n_idx
