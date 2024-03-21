@@ -6,7 +6,7 @@ from openai import OpenAI
 
 class IREvaluator:
     def __init__(self):
-        self.eval_set = self.load_evaluation_data()
+        self.eval_set = self._load_evaluation_data()
         self.top_n_courses_openai = {}
 
     def _load_evaluation_data(self):
@@ -15,12 +15,12 @@ class IREvaluator:
 
     def evaluate_openai_embeddings_ir(self) -> dict[str, float]:
         client = OpenAI()
-        embeddings, course_codes = self.load_openai_course_embeddings()
+        embeddings, course_codes = self._load_openai_course_embeddings()
 
         ndcgs = []
         for query in self.eval_set["queries"]:
-            query_embedding = self.get_openai_embedding(query["query"], client=client)
-            top_n_idx = self.vector_search(query_embedding, embeddings)
+            query_embedding = self._get_openai_embedding(query["query"], client=client)
+            top_n_idx = self._vector_search(query_embedding, embeddings)
             top_n_courses = course_codes[top_n_idx]
             self.top_n_courses_openai[query["query"]] = top_n_courses
             ndcg = self.calculate_ndcg(ground_truths=query["answers"], predictions=top_n_courses)
