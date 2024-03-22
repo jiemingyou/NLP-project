@@ -11,6 +11,7 @@ retrieval-based methods.
 ```
 ├── bert                   # BERT model
 ├── embedding              # Embedding models
+├── evaluation             # IR evaluation
 ├── preprocessing          # Preprocessing the course descriptions
 ├── scraper                # Scraping the course descriptions
 └── README.md
