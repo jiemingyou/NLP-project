@@ -12,8 +12,13 @@ class TFIDF:
 
     def __init__(self):
         self.vectorizer = TfidfVectorizer()
-        self.stop_words = set(stopwords.words("english")).update(punctuation).add("...")
         self.stemmer = SnowballStemmer("english")
+        self._prepare_stopwords()
+
+    def _prepare_stopwords(self) -> str:
+        self.stop_words = set(stopwords.words("english"))
+        self.stop_words.update(punctuation)
+        self.stop_words.add("...")
 
     def _tokenize(self, df, colname: str) -> str:
         return df[colname].apply(word_tokenize)
