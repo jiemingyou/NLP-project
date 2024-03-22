@@ -9,7 +9,13 @@ def scrape_sisu() -> pd.DataFrame:
 
     # Store the course data into a dataframe
     course_data = pd.DataFrame(
-        columns=["course_code", "course_name", "credits", "course_info", "url"]
+        columns=[
+            "course_code",
+            "course_name",
+            "credits",
+            "course_info",
+            "url",
+        ]
     )
 
     # Get the URLs from the text files
