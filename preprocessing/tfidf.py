@@ -20,20 +20,25 @@ class TFIDF:
         self.stop_words.update(punctuation)
         self.stop_words.add("...")
 
+    def tokenize(self, text: str) -> str:
+        return word_tokenize(text)
+
     def _tokenize(self, df, colname: str) -> str:
-        return df[colname].apply(word_tokenize)
+        return df[colname].apply(self.tokenize)
+
+    def stem(self, words: str) -> str:
+        return [self.stemmer.stem(word) for word in words]
 
     def _stem(self, df, colname: str) -> str:
-        return df[colname].apply(lambda x: [self.stemmer.stem(word) for word in x])
+        return df[colname].apply(lambda x: self.stem(x))
+
+    def remove_stopwords(self, words: str) -> str:
+        return [
+            word for word in words if word not in self.stop_words and word.isalnum()
+        ]
 
     def _remove_stopwords(self, df, colname: str) -> str:
-        return df[colname].apply(
-            lambda x: [
-                word
-                for word in x
-                if word.lower() not in self.stop_words and word.isalnum()
-            ]
-        )
+        return df[colname].apply(lambda x: self.remove_stopwords(x))
 
     def preprocess(self, df: pd.DataFrame, colname: str) -> pd.DataFrame:
         df["tokens"] = self._tokenize(df, colname)
