@@ -14,11 +14,11 @@
             "query_id": 2,
             "query": "Courses that teach you the basics of statistics and statistical thinking",
             "answers": [
-                "MS-A0501",
-                "MS-A0509",
+                "MS-A0503",
                 "MS-C1620",
                 "MS-E1623",
-                "MS-C2128"]
+                "MS-C2128",
+                "ELEC-E8107"]
         },
         {
             "query_id": 3,
