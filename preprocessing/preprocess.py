@@ -8,7 +8,7 @@ from preprocessing_utils import concat_course_info
 from tfidf import TFIDF
 
 
-def preprocess(vectorize=False) -> Tuple[pd.DataFrame, TfidfVectorizer]:
+def preprocess(vectorize=False):
     # Load the data
     df = pd.read_csv("../scraper/data/course_data.csv")
 
@@ -31,17 +31,17 @@ def preprocess(vectorize=False) -> Tuple[pd.DataFrame, TfidfVectorizer]:
     print("Saved translated dataset to translated_course_data.csv")
 
     if not vectorize:
-        return dataset, None
+        return dataset, None, None
 
     # Calculate the tf-idf
     dataset = dataset.to_pandas()
     tfidf = TFIDF()
     dataset = tfidf.preprocess(dataset, "course_description_en")
-    dataset = tfidf.fit_transform(dataset, "course_description_en")
+    X = tfidf.fit_transform(dataset, "tokens")
     tfidf_vectorizer = tfidf.get_vectorizer()
 
-    return dataset, tfidf_vectorizer
+    return dataset, X, tfidf_vectorizer
 
 
 if __name__ == "__main__":
-    dataset, tfidfvectorizer = preprocess()
+    dataset, X, tfidfvectorizer = preprocess()
