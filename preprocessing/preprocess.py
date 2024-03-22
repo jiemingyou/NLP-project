@@ -5,14 +5,14 @@ from datasets import Dataset
 from translator import Translator
 
 from preprocessing_utils import concat_course_info
-from tfidf import calculate_tf_idf
+from tfidf import TFIDF
 
 
 def preprocess(vectorize=False) -> Tuple[pd.DataFrame, TfidfVectorizer]:
     # Load the data
     df = pd.read_csv("../scraper/data/course_data.csv")
 
-    # Apply the translation pipeline
+    # Apply the concatenation pipeline
     df["course_description"] = df.apply(concat_course_info, axis=1)
 
     # Create a dataset
@@ -35,13 +35,13 @@ def preprocess(vectorize=False) -> Tuple[pd.DataFrame, TfidfVectorizer]:
 
     # Calculate the tf-idf
     dataset = dataset.to_pandas()
-    X, tfidf_vectorizer = calculate_tf_idf(dataset, "course_description_en")
-
-    # Add the tf-idf to the dataset
-    dataset["tf_idf"] = list(X.toarray())
+    tfidf = TFIDF()
+    dataset = tfidf.preprocess(dataset, "course_description_en")
+    dataset = tfidf.fit_transform(dataset, "course_description_en")
+    tfidf_vectorizer = tfidf.get_vectorizer()
 
     return dataset, tfidf_vectorizer
 
 
 if __name__ == "__main__":
-    dataset = preprocess()
+    dataset, tfidfvectorizer = preprocess()
