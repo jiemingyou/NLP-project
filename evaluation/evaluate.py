@@ -1,21 +1,25 @@
 import json
+import pickle
 import numpy as np
 import pandas as pd
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from eval_util import TFIDF
 
 
 class IREvaluator:
     """Evaluator class for Information Retrieval (IR) tasks. The class provides methods
     to evaluate the performance of course embeddings on an evaluation set using the Normalized
-    Discounted Cumulative Gain (NDCG) metric. The class supports evaluation of both OpenAI
-    and SentenceTransformer embeddings.
+    Discounted Cumulative Gain (NDCG) metric. The class supports evaluation of OpenAI embeddings,
+    TF-IDF embeddings, and SentenceTransformer embeddings.
     """
     def __init__(self, eval_path: str):
         self.eval_path = eval_path
         self.eval_set = self._load_evaluation_data()
         self.top_n_courses_openai = {}
         self.top_n_courses_transformers = {}
+        self.top_n_courses_tfidf = {}
 
     def _load_evaluation_data(self) -> dict:
         """Loads the evaluation set from the given evaluation set path.
@@ -25,6 +29,47 @@ class IREvaluator:
         """
         with open(self.eval_path, "r") as f:
             return json.load(f)
+        
+    def _load_tfidf_vectorizer(self, filepath: str) -> TfidfVectorizer:
+        """Loads the TF-IDF vectorizer from a given file.
+
+        Args:
+            filepath (str): The file path to the pickle file containing the vectorizer.
+
+        Returns:
+            TfidfVectorizer: The pretrained TF-IDF vectorizer.
+        """
+        with open(filepath, "rb") as f:
+            tfidf_vectorizer = pickle.load(f)
+        return tfidf_vectorizer
+    
+    def evaluate_tfidf_embeddings_ir(self, vectorizer_filepath: str, embeddings_filepath: str) -> dict[str, float]:
+        """Evaluates the TF-IDF course embeddings on the evaluation set using as metrics
+        the average of Normalized Discounted Cumulative Gain (NDCG) of the evaluation queries.
+
+        Args:
+            vectorizer_filepath (str): The path to the pickle file containing the pretrained 
+            TF-IDF vectorizer.
+            embeddings_filepath (str): The path to the pickle file containing the course embeddings.
+
+        Returns:
+            dict[str, float]: A dictionary containing the metric scores for the evaluation set.
+        """
+        tfidf_processing = TFIDF()
+        vectorizer = self._load_tfidf_vectorizer(vectorizer_filepath)
+        embeddings, course_codes = self._load_course_embeddings(embeddings_filepath)
+
+        ndcgs = []
+        for query in self.eval_set["queries"]:
+            query_df = tfidf_processing.preprocess(pd.DataFrame([query["query"]], columns=["query"]), "query")
+            query_embedding = vectorizer.transform(query_df["tokens"].apply(" ".join)).toarray()[0]
+            top_n_idx = self._vector_search(query_embedding, embeddings)
+            top_n_courses = course_codes[top_n_idx]
+            self.top_n_courses_tfidf[query["query"]] = top_n_courses
+            ndcg = self.calculate_ndcg(ground_truths=query["answers"], predictions=top_n_courses)
+            ndcgs.append(ndcg)
+        
+        return {"ndcg": np.mean(ndcgs)}
 
     def evaluate_transformers_embeddings_ir(self, model: str, embeddings_filepath: str) -> dict[str, float]:
         """Evaluates the SentenceTransformer course embeddings on the evaluation set using as metrics
