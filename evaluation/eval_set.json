@@ -90,6 +90,17 @@
                 "",
                 "",
             ]
+        },
+        {
+            "query_id": 10,
+            "query": "Courses that teach you how to analyse health-related data and understand medtech applications",
+            "answers": [
+                "CS-E5890",
+                "TU-E5050",
+                "CS-C4100",
+                "ELEC-A8720",
+                "ELEC-E8739"
+            ]
         }
     ]
 }
