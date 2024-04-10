@@ -176,7 +176,7 @@ class IREvaluator:
         return top_n_idx
 
     @staticmethod
-    def calculate_ndcg(ground_truths: list[str], predictions: list[str], k=5) -> float:
+    def calculate_ndcg(ground_truths: list[str], predictions: list[str]) -> float:
         """Calculates the Normalized Discounted Cumulative Gain (NDCG) for a given query on
         the evaluation set. NDCG is a measure of ranking quality. It is calculated as the
         ratio of the DCG score to the IDCG score, where the DCG score is the sum of the
@@ -194,7 +194,7 @@ class IREvaluator:
         Returns:
             float: The NDCG score for the query.
         """
-        assert len(predictions) == k, "The number of predictions must be equal to k."
+        k = len(predictions)
 
         relevances = [i for i in range(k, 0, -1)]
         idcg = sum([rel / np.log2(i + 2) for i, rel in enumerate(relevances)])

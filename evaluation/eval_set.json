@@ -85,10 +85,13 @@
         },
         {
             "query_id": 9,
-            "query": "",
+            "query": "Courses that teach you about understanding social networks and technical analysis on them",
             "answers": [
-                "",
-                "",
+                "CS-E4730",
+                "CS-E5740",
+                "MS-E1603",
+                "CS-E5745",
+                "CS-E4650"
             ]
         },
         {
@@ -100,6 +103,61 @@
                 "CS-C4100",
                 "ELEC-A8720",
                 "ELEC-E8739"
+            ]
+        },
+        {
+            "query_id": 11,
+            "query": "Courses that teach you about the basics in molecular biology",
+            "answers": [
+                "CHEM-C2300",
+                "ELEC-C8722",
+                "CHEM-A1290",
+                "CHEM-E3150",
+                "CHEM-E4115"
+            ]
+        },
+        {
+            "query_id": 12,
+            "query": "Courses that teach you about databases and data warehousing (e.g., SQL, OLTP, OLAP)",
+            "answers": [
+                "CS-A1150",
+                "CS-A1155",
+                "CS-E5300",
+                "CS-AJ0020",
+                "CS-E4640"
+            ]
+        },
+        {
+            "query_id": 13,
+            "query": "Courses that teach you about safe laboratory work related to chemical engineering",
+            "answers": [
+                "CHEM-E7120",
+                "CHEM-A1010",
+                "CHEM-E7115",
+                "CHEM-EV05",
+                "CHEM-E0140"
+            ]
+        },
+        {
+            "query_id": 14,
+            "query": "Courses that teach you about chemical engineering in pulp and paper industry",
+            "answers": [
+                "CHEM-C2340",
+                "CHEM-E2125",
+                "CHEM-E1160",
+                "CHEM-E2140",
+                "CHEM-L2170"
+            ]
+        },
+        {
+            "query_id": 15,
+            "query": "Courses that teach you about space technologies such as satellites and rockets",
+            "answers": [
+                "ELEC-E4210",
+                "ELEC-E4220",
+                "ELEC-E4240",
+                "ELEC-E4940",
+                "ELEC-E4930"
             ]
         }
     ]
