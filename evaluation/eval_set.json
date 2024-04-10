@@ -53,10 +53,23 @@
         {
             "query_id": 6,
             "query": "Courses that teach you project management skills",
-            "answers"[
+            "answers": [
                 "TU-EJ2031",
                 "TU-C3010",
                 "TU-EV0006",
+                "TU-A1100",
+                "ELEC-E8004"
+            ]
+        },
+        {
+            "query_id": 7,
+            "query": "Courses that teach you optimization with the focus on basics but also covering advanced techniques",
+            "answers": [
+                "MS-C2105",
+                "MS-E2122",
+                "MS-E2121",
+                "MS-E2148",
+                "MS-E2123"
             ]
         },
         {
