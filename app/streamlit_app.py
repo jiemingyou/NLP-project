@@ -1,9 +1,11 @@
+import time
+import pandas as pd
 import streamlit as st
+from openai import OpenAI
 from db_connection import DBConnection
 
 
-# Initialize connection.
-# Uses st.cache_resource to only run once.
+# Initialize connections
 @st.cache_resource
 def init_connection_sqlalchemy():
     db_user = st.secrets["DB_USER"]
@@ -14,34 +16,92 @@ def init_connection_sqlalchemy():
     return DBConnection(db_user, db_password, db_host, db_port, db_name)
 
 
-# supabase = init_connection()
-supabase = init_connection_sqlalchemy()
+@st.cache_resource
+def init_connection_openai():
+    return OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 
 @st.cache_data(ttl=600)
-def query_courses(course_name: str = None):
-    """
-    Query courses from the database.
-    """
-    assert course_name is not None, "Please provide a course name"
-    SQL_QUERY_EXAMPLE = f"""
-    SELECT *
-    FROM course_embeddings
-    WHERE LOWER(name) LIKE '%{course_name.lower()}%'
-    LIMIT 5;
-    """
-    return supabase.query(SQL_QUERY_EXAMPLE)
+def get_embedding(text, model="text-embedding-3-small") -> list:
+    text = text.replace("\n", " ")
+    return client.embeddings.create(input=[text], model=model).data[0].embedding
 
 
+@st.cache_data(ttl=600)
+def get_top_n_courses(query: str, n: int = 5):
+    """
+    Get top n courses based on the cosine similarity.
+    """
+    assert isinstance(n, int), "n should be an integer."
+    embedding = get_embedding(query)
+    query = f"""
+        SELECT *
+        FROM course_embeddings
+        ORDER BY embedding_openai <=> '{embedding}' asc
+        LIMIT {n}
+        """
+    return supabase.query(query)
+
+
+def response_streamer(response: str):
+    """
+    Stream responses to the user.
+    """
+    for word in response.split(" "):
+        yield word + " "
+        time.sleep(0.05)
+
+
+def format_response(df: pd.DataFrame):
+    """
+    Format the response.
+    """
+    response = [f"{idx+1}: [{row['name']}]({row['url']})" for idx, row in df.iterrows()]
+    return "  \n".join(response)
+
+
+supabase = init_connection_sqlalchemy()
+client = init_connection_openai()
+
+# Set page title and caption
 st.title("📚 OpenA!")
 st.caption("A course recommender tool powered by NLP. Work in progress, stay tuned!")
-st.text_input("🔎 Course name", key="course_name")
-course_name = st.session_state.get("course_name")
 
-if course_name:
-    st.dataframe(
-        query_courses(course_name)[["name", "description", "url"]],
-        hide_index=True,
+# Reset chat history
+if st.button("Clear conversation"):
+    st.session_state.messages = []
+    st.rerun()
+
+# Insert a chat message container.
+with st.chat_message("assistant"):
+    st.write(
+        "Hello! I'm your course recommender bot. Feel free to ask me for course recommendations."
     )
-else:
-    st.info("Please enter a course name to search.", icon="ℹ️")
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+
+# React to user input
+if prompt := st.chat_input("I want to learn about natural language processing."):
+
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # Response
+    with st.spinner("Thinking..."):
+        courses = get_top_n_courses(prompt)
+        courses_string = format_response(courses)
+        response = f"Here are some course recommendations: \n\n {courses_string}."
+        with st.chat_message("assistant"):
+            response = st.write_stream(response_streamer(response))
+            st.session_state.messages.append({"role": "assistant", "content": response})
