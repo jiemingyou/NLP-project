@@ -69,12 +69,27 @@
                 "MS-E2122",
                 "MS-E2121",
                 "MS-E2148",
-                "MS-E2123"
+                "ELEC-E5424"
             ]
         },
         {
-
+            "query_id": 8,
+            "query": "Courses that teach you advanced topics related to vector spaces and linear algebra",
+            "answers": [
+                "MS-E1461",
+                "MS-E1462",
+                "MS-C1541",
+                "MS-E1150",
+                "MS-C1342"
+            ]
+        },
+        {
+            "query_id": 9,
+            "query": "",
+            "answers": [
+                "",
+                "",
+            ]
         }
-        
     ]
 }
