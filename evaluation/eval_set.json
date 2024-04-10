@@ -2,7 +2,7 @@
     "queries" : [
         {
             "query_id": 1,
-            "query": "Strategy consulting with a focus on the technology sector",
+            "query": "Courses that teach you strategy consulting with a focus on the technology sector",
             "answers": [
                 "TU-E1120",
                 "TU-E4310",
@@ -22,7 +22,7 @@
         },
         {
             "query_id": 3,
-            "query": "Understanding SOTA transformers, deep learning and ChatGPT",
+            "query": "Courses that teach you to understand SOTA transformers, deep learning and ChatGPT",
             "answers": [
                 "CS-E4890",
                 "CS-EJ3311",
@@ -32,7 +32,7 @@
         },
         {
             "query_id": 4,
-            "query": "Understanding hype behind blockchain, cryptocurrency, and BITCOIN",
+            "query": "Courses that teach you to understand hype behind blockchain, cryptocurrency, and BITCOIN",
             "answers": [
                 "CS-AJ0100",
                 "TU-E4300",
@@ -42,13 +42,26 @@
         },
         {
             "query_id": 5,
-            "query": "How to build a new startup",
+            "query": "Courses that teach you how to build a new startup",
             "answers": [
                 "TU-E4100",
                 "TU-C2080",
                 "TU-C2090",
                 "TU-E4040",
                 "TU-E4031"]
+        },
+        {
+            "query_id": 6,
+            "query": "Courses that teach you project management skills",
+            "answers"[
+                "TU-EJ2031",
+                "TU-C3010",
+                "TU-EV0006",
+            ]
+        },
+        {
+
         }
+        
     ]
 }
