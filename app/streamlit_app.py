@@ -27,18 +27,21 @@ def query_courses(course_name: str = None):
     SQL_QUERY_EXAMPLE = f"""
     SELECT *
     FROM course_embeddings
-    WHERE LOWER(name) LIKE '%{course_name}%'
+    WHERE LOWER(name) LIKE '%{course_name.lower()}%'
     LIMIT 5;
     """
     return supabase.query(SQL_QUERY_EXAMPLE)
 
 
 st.title("📚 OpenA!")
-st.caption("🚀 A course recommender tool powered by NLP")
-st.text_input("Course name", key="course_name")
+st.caption("A course recommender tool powered by NLP. Work in progress, stay tuned!")
+st.text_input("🔎 Course name", key="course_name")
 course_name = st.session_state.get("course_name")
 
 if course_name:
-    st.dataframe(query_courses(course_name)[["name", "description", "url"]])
+    st.dataframe(
+        query_courses(course_name)[["name", "description", "url"]],
+        hide_index=True,
+    )
 else:
-    st.warning("Please enter a course name to search.")
+    st.info("Please enter a course name to search.", icon="ℹ️")
