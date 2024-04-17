@@ -1,7 +1,6 @@
 # NLP-project
 
-> [!NOTE]
-> The demo is available at [http://aaltonlp.streamlit.app](http://aaltonlp.streamlit.app)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](http://aaltonlp.streamlit.app)
 
 This is the working repository for the course project of the course ELEC-E5550
 Statistical Natural Language Processing (SNLP) taught at Aalto University.
@@ -26,6 +25,7 @@ retrieval-based methods.
 ├── embedding              # Embedding models
 ├── evaluation             # IR evaluation
 ├── preprocessing          # Preprocessing the course descriptions
-├── scraper                # Scraping the course descriptions
+├── scraper                # Scraping the course description
+├── reader                 # Template for the LLM component
 └── README.md
 ```
