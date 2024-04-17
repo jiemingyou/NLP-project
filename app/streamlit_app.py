@@ -17,22 +17,32 @@ client = init_connection_openai()
 openai_api_key = ""
 
 # Set page title and caption
-st.title("📚 OpenA!")
-st.caption(
+st.write(
     """
-    A course recommender tool powered by NLP. 
-    Course project for Statistical Natural Language Processing Course.
+    # :mag_right: OpenA!
+
+    This is a Aalto University course recommender tool powered by NLP,
+    made as a course project for Statistical Natural Language Processing.
+    The website and all content is for educational purposes only.
     """
 )
-
+st.write(
+    """
+    Want to learn more about the project?
+    [Check the project repo!](https://github.com/jiemingyou/NLP-project)
+    """
+)
 
 # Reset chat history
 if st.button("Clear conversation"):
     st.session_state.messages = []
     st.rerun()
 
-# Toggle LLM
 with st.sidebar:
+    st.metric("Courses in database", 811, delta="12 %")
+    st.divider()
+
+    # Toggle LLM
     llm = st.toggle("Activate LLM feature (optional)", value=False)
     if llm:
         openai_api_key = st.text_input("OpenAI API key")
