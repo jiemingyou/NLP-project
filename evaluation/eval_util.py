@@ -7,6 +7,7 @@ from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
+# Copied from the /preprocessing/tfidf.py file
 class TFIDF:
 
     def __init__(self):
